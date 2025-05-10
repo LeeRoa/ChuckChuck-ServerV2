@@ -6,27 +6,27 @@ spring:
   # DB Setting
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mariadb://222.120.180.213:23307/approval?serverTimezone=UTC&characterEncoding=UTF-8
-    username: dba
-    password: LRAqscESZ!%
+    url: jdbc:log4jdbc:mariadb://localhost:3306/approval?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 1234
 
   # Mail sender setting
   mail:
+    host: mail.risecc.kro.kr
+    port: 587
+    username: test
+    password: Test1234!
     default-encoding: UTF-8
-    host: risecc.kro.kr
     properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.ssl.trust: mail.risecc.kro.kr
       mail:
         debug: true
         mime:
           charset: UTF-8
         transport:
           protocol: smtp
-    port: 2325
-
-# Mybatis Setting
-mybatis:
-  mapper-locations: src/main/resources/mapper/*.xml
-  type-aliases-package: rise.cc.dao
 
 # Server Setting
 server:
