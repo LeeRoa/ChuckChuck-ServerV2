@@ -1,0 +1,78 @@
+# Spring Setting
+spring:
+  application:
+    name: ChuckChuck-Server
+
+  # DB Setting
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mariadb://222.120.180.213:23307/approval?serverTimezone=UTC&characterEncoding=UTF-8
+    username: dba
+    password: LRAqscESZ!%
+
+  # Mail sender setting
+  mail:
+    default-encoding: UTF-8
+    host: risecc.kro.kr
+    properties:
+      mail:
+        debug: true
+        mime:
+          charset: UTF-8
+        transport:
+          protocol: smtp
+    port: 2325
+
+# Mybatis Setting
+mybatis:
+  mapper-locations: src/main/resources/mapper/*.xml
+  type-aliases-package: rise.cc.dao
+
+# Server Setting
+server:
+  servlet:
+    context-path: /
+  ssl:
+    key-store: src/main/resources/config/keystore.jks
+    key-store-password: cc0914!@
+  port: 28444
+
+# Swagger-ui Setting
+springdoc:
+  api-docs:
+    path: /v3/api-docs       # API ?? ?? ??
+  swagger-ui:
+    path: /swagger-ui.html  # Swagger UI ?? ??
+    operationsSorter: method  # ????? ?? ??
+    tagsSorter: alpha         # ?? ?? ??
+
+#logging setting
+logging:
+  level:
+    com:
+      zaxxer:
+        hikari: INFO
+    javax:
+      sql:
+        DataSource: OFF
+    jdbc:
+      audit: OFF # JDBC ????? ??? ????? ?? ?? X
+      resultset: OFF # ResultSet? ??? ?? JDBC ?? ??? ??
+      resultsettable: INFO  #SQL ?? ??? Table???? ??
+      sqlonly: OFF     #SQL? ??? ??
+      sqltiming: INFO    #SQL + ???? ??
+      connection: OFF  # ??? ??/?? ?? ??
+    org:
+      springframework: INFO
+    root: INFO
+
+  # logback setting
+  pattern:
+    file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
+  #    name: ${catalina.base}/logs/ChuckChuck-Server.log
+  logback:
+    rollingpolicy:
+      file-name-pattern: "logs/ChuckChuck-Server.%d{yyyy-MM-dd}.%i.log"
+      #      file-name-pattern: "${catalina.base}/logs/okey-admin.%d{yyyy-MM-dd}.%i.log"
+      max-history: 30
+      max-file-size: 100MB
