@@ -10,8 +10,8 @@ import lombok.Getter;
 public class CustomCheckedException extends Exception {
     private final ResultCodeType resultCode;
 
-    public CustomCheckedException(ResultCodeType code) {
-        super(code.resultMsg());
-        this.resultCode = code;
+    public CustomCheckedException(ResultCodeType resultCode) {
+        super(resultCode.resultMsg());
+        this.resultCode = resultCode;
     }
 }
