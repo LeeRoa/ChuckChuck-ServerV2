@@ -40,31 +40,17 @@ server:
 # Swagger-ui Setting
 springdoc:
   api-docs:
-    path: /v3/api-docs       # API ?? ?? ??
+    path: /v3/api-docs       # API Path
   swagger-ui:
-    path: /swagger-ui.html  # Swagger UI ?? ??
-    operationsSorter: method  # ????? ?? ??
-    tagsSorter: alpha         # ?? ?? ??
+    path: /swagger-ui.html  # Swagger UI 접속 경로
+    operationsSorter: method
+    tagsSorter: alpha
 
-#logging setting
+# logging setting
 logging:
   level:
-    com:
-      zaxxer:
-        hikari: INFO
-    javax:
-      sql:
-        DataSource: OFF
-    jdbc:
-      audit: OFF # JDBC ????? ??? ????? ?? ?? X
-      resultset: OFF # ResultSet? ??? ?? JDBC ?? ??? ??
-      resultsettable: INFO  #SQL ?? ??? Table???? ??
-      sqlonly: OFF     #SQL? ??? ??
-      sqltiming: INFO    #SQL + ???? ??
-      connection: OFF  # ??? ??/?? ?? ??
-    org:
-      springframework: INFO
-    root: INFO
+    org.hibernate.SQL: debug        # SQL만 출력
+    org.hibernate.type.descriptor.sql.BasicBinder: trace  # 바인딩 파라미터만 출력
 
   # logback setting
   pattern:
