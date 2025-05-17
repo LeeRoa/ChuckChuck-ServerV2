@@ -21,10 +21,10 @@ public class ApiExceptionHandler {
      * }
      */
     @ExceptionHandler({CustomRuntimeException.class, CustomCheckedException.class})
-    public ResponseEntity<ApiResponse<?>> handleCustomExceptions(Exception ex) {
-        ResultCodeType resultCode = (ex instanceof CustomRuntimeException)
-                ? ((CustomRuntimeException) ex).getResultCode()
-                : ((CustomCheckedException) ex).getResultCode();
+    public ResponseEntity<ApiResponse<?>> handleCustomExceptions(Exception e) {
+        ResultCodeType resultCode = (e instanceof CustomRuntimeException)
+                ? ((CustomRuntimeException) e).getResultCode()
+                : ((CustomCheckedException) e).getResultCode();
 
         return ResponseEntity.ok(ApiResponse.fail(resultCode));
     }
