@@ -49,8 +49,8 @@ springdoc:
 # logging setting
 logging:
   level:
-    org.hibernate.SQL: debug # SQL만 출력
-    org.hibernate.type.descriptor.sql.BasicBinder: info  # 바인딩 파라미터만 출력
+    org.hibernate.SQL: info
+    org.hibernate.engine.jdbc.spi.SqlExceptionHelper: trace
 
   # logback setting
   pattern:
