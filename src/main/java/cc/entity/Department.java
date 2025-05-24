@@ -1,58 +1,53 @@
 package cc.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "cc_department", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "department_name")
-})
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Entity
+@Table(name = "cc_department")
 public class Department {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "department_id")
-    private Integer departmentId;
+    @Column(name = "department_id", nullable = false)
+    private Integer id;
 
-    // 자기 자신을 참조하는 계층 구조
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_department_id")
     private Department parentDepartment;
 
-    @Column(name = "department_name", length = 100, nullable = false)
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "department_name", nullable = false, length = 100)
     private String departmentName;
 
+    @NotNull
+    @ColumnDefault("0")
     @Column(name = "display_order", nullable = false)
-    private Integer displayOrder = 0;
+    private Integer displayOrder;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "is_active", nullable = false, length = 1)
+    @NotNull
+    @ColumnDefault("'Y'")
+    @Column(name = "is_active", nullable = false)
     private YesNo isActive;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @NotNull
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "spare", length = 255)
+    @Size(max = 255)
+    @Column(name = "spare")
     private String spare;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 }

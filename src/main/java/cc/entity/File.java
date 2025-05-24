@@ -12,32 +12,42 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "cc_code")
-public class Code {
+@Table(name = "cc_file")
+public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "code_id", nullable = false)
+    @Column(name = "file_no", nullable = false)
     private Integer id;
 
-    @Size(max = 50)
+    @Size(max = 255)
     @NotNull
-    @Column(name = "code_type", nullable = false, length = 50)
-    private String codeType;
+    @Column(name = "origin_name", nullable = false)
+    private String originName;
+
+    @Size(max = 255)
+    @Column(name = "stored_name")
+    private String storedName;
+
+    @NotNull
+    @Column(name = "file_size", nullable = false)
+    private Integer fileSize;
+
+    @Size(max = 500)
+    @NotNull
+    @Column(name = "file_path", nullable = false, length = 500)
+    private String filePath;
 
     @Size(max = 100)
     @NotNull
-    @Column(name = "code_name", nullable = false, length = 100)
-    private String codeName;
-
-    @NotNull
-    @Column(name = "display_order", nullable = false)
-    private Integer displayOrder;
+    @Column(name = "file_content_type", nullable = false, length = 100)
+    private String fileContentType;
 
     @NotNull
     @ColumnDefault("current_timestamp()")
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @ColumnDefault("current_timestamp()")
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 

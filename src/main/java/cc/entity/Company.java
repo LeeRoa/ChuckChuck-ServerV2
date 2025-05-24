@@ -1,75 +1,81 @@
 package cc.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-@Entity
-@Table(name = "cc_company", uniqueConstraints = @UniqueConstraint(columnNames = "biz_no"))
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Entity
+@Table(name = "cc_company")
 public class Company {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "company_no")
-    private Integer companyNo;
+    @Column(name = "company_no", nullable = false)
+    private Integer id;
 
-    @Column(name = "biz_no", length = 20, nullable = false, unique = true)
+    @Size(max = 20)
+    @NotNull
+    @Column(name = "biz_no", nullable = false, length = 20)
     private String bizNo;
 
-    @Column(name = "company_name", length = 100, nullable = false)
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "company_name", nullable = false, length = 100)
     private String companyName;
 
-    @Column(name = "company_address", length = 255, nullable = false)
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "company_address", nullable = false)
     private String companyAddress;
 
-    @Column(name = "company_call", length = 20, nullable = false)
+    @Size(max = 20)
+    @NotNull
+    @Column(name = "company_call", nullable = false, length = 20)
     private String companyCall;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @NotNull
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @ColumnDefault("current_timestamp()")
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @NotNull
     @Column(name = "occur_leave_dt", nullable = false)
     private LocalDate occurLeaveDt;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "remain_leave_whether", length = 1, nullable = false)
+    @NotNull
+    @Column(name = "remain_leave_whether", nullable = false)
     private YesNo remainLeaveWhether;
 
+    @NotNull
     @Column(name = "default_leave_cnt", nullable = false)
     private Integer defaultLeaveCnt;
 
+    @NotNull
     @Column(name = "basic_work_hours", nullable = false)
     private Integer basicWorkHours;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "overtime_pay_whether", length = 1, nullable = false)
+    @NotNull
+    @Column(name = "overtime_pay_whether", nullable = false)
     private YesNo overtimePayWhether;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "work_type", nullable = false)
     private Code workType;
 
-    @Column(name = "spare", length = 255)
+    @Size(max = 255)
+    @Column(name = "spare")
     private String spare;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 }

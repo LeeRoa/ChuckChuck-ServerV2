@@ -1,56 +1,66 @@
 package cc.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-@Entity
-@Table(name = "cc_employee", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"email"}),
-        @UniqueConstraint(columnNames = {"phone_number"})
-})
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Entity
+@Table(name = "cc_employee")
 public class Employee {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employee_id")
-    private Integer employeeId;
+    @Column(name = "employee_id", nullable = false)
+    private Integer id;
 
+    @Size(max = 100)
+    @NotNull
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
+    @Size(max = 15)
+    @NotNull
     @Column(name = "phone_number", nullable = false, length = 15)
     private String phoneNumber;
 
+    @Size(max = 64)
+    @NotNull
     @Column(name = "password_hash", nullable = false, length = 64)
     private String passwordHash;
 
+    @Size(max = 50)
     @Column(name = "full_name", length = 50)
     private String fullName;
 
+    @NotNull
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "is_active", nullable = false, length = 1)
+    @NotNull
+    @ColumnDefault("'Y'")
+    @Column(name = "is_active", nullable = false)
     private YesNo isActive;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "agree_privacy", nullable = false, length = 1)
+    @NotNull
+    @ColumnDefault("'N'")
+    @Column(name = "agree_privacy", nullable = false)
     private YesNo agreePrivacy;
 
+    @Size(max = 20)
     @Column(name = "position_code", length = 20)
     private String positionCode;
 
+    @NotNull
+    @ColumnDefault("0")
     @Column(name = "login_fail_count", nullable = false)
-    private Integer loginFailCount = 0;
+    private Integer loginFailCount;
 
     @Column(name = "join_dt")
     private LocalDateTime joinDt;
@@ -58,9 +68,10 @@ public class Employee {
     @Column(name = "retire_dt")
     private LocalDateTime retireDt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
-    private Code role;
+    private Code roleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
@@ -68,14 +79,15 @@ public class Employee {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rank_id")
-    private Rank rank;
+    private Rank rankId;
 
-    @Column(name = "company_no", length = 20)
-    private String companyNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_no", referencedColumnName = "biz_no")
+    private Company companyNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
-    private Employee manager;
+    private Employee managerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "work_type")
@@ -84,23 +96,17 @@ public class Employee {
     @Column(name = "basic_work_hours")
     private Integer basicWorkHours;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @NotNull
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @ColumnDefault("current_timestamp()")
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "spare", length = 255)
+    @Size(max = 255)
+    @Column(name = "spare")
     private String spare;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 }

@@ -12,26 +12,22 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "cc_code")
-public class Code {
+@Table(name = "notice_comment")
+public class NoticeComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "code_id", nullable = false)
+    @Column(name = "comment_id", nullable = false)
     private Integer id;
 
-    @Size(max = 50)
     @NotNull
-    @Column(name = "code_type", nullable = false, length = 50)
-    private String codeType;
-
-    @Size(max = 100)
-    @NotNull
-    @Column(name = "code_name", nullable = false, length = 100)
-    private String codeName;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "notice_no", nullable = false)
+    private Notice noticeNo;
 
     @NotNull
-    @Column(name = "display_order", nullable = false)
-    private Integer displayOrder;
+    @Lob
+    @Column(name = "content", nullable = false)
+    private String content;
 
     @NotNull
     @ColumnDefault("current_timestamp()")
@@ -40,6 +36,16 @@ public class Code {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @NotNull
+    @ColumnDefault("'N'")
+    @Column(name = "delete_yn", nullable = false)
+    private YesNo deleteYn;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "creator_id", nullable = false)
+    private Employee creator;
 
     @Size(max = 255)
     @Column(name = "spare")

@@ -12,34 +12,35 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "cc_code")
-public class Code {
+@Table(name = "schedule_group")
+public class ScheduleGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "code_id", nullable = false)
+    @Column(name = "schedule_group_id", nullable = false)
     private Integer id;
-
-    @Size(max = 50)
-    @NotNull
-    @Column(name = "code_type", nullable = false, length = 50)
-    private String codeType;
 
     @Size(max = 100)
     @NotNull
-    @Column(name = "code_name", nullable = false, length = 100)
-    private String codeName;
+    @Column(name = "schedule_group_name", nullable = false, length = 100)
+    private String scheduleGroupName;
 
-    @NotNull
-    @Column(name = "display_order", nullable = false)
-    private Integer displayOrder;
+    @Size(max = 255)
+    @Column(name = "schedule_group_description")
+    private String scheduleGroupDescription;
 
     @NotNull
     @ColumnDefault("current_timestamp()")
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @ColumnDefault("current_timestamp()")
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "creator_id", nullable = false)
+    private Employee creatorId;
 
     @Size(max = 255)
     @Column(name = "spare")
