@@ -1,8 +1,9 @@
 package cc.service;
 
 import cc.dto.ApiResponse;
+import cc.entity.Employee;
 
 public interface EmployeeService {
 
-    public ApiResponse<?> insertEmployee();
+    ApiResponse<?> insertEmployee(Employee employee);
 }

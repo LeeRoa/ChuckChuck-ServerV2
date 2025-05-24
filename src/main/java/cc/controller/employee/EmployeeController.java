@@ -1,14 +1,12 @@
 package cc.controller.employee;
 
 import cc.dto.ApiResponse;
+import cc.entity.Employee;
 import cc.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Transactional
@@ -30,8 +28,8 @@ public class EmployeeController {
      * @return 처리 결과 값
      */
     @PostMapping
-    public ApiResponse<?> insertEmployee() {
-        return employeeService.insertEmployee();
+    public ApiResponse<?> insertEmployee(@RequestBody Employee employee) {
+        return employeeService.insertEmployee(employee);
     }
 
     /**
