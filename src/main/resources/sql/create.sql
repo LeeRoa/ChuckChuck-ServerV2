@@ -478,6 +478,84 @@ CREATE TABLE notice_comment (
                                 CONSTRAINT fk_comment_creator FOREIGN KEY (creator_id) REFERENCES cc_employee(employee_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='공지사항 댓글 테이블';
 
-commit;
+CREATE TABLE alert_master (
+                              alert_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '알림 유형 ID',
+
+                              alert_type INT NOT NULL COMMENT '알림 타입 코드 ID (cc_code.code_type = alert_type)',
+                              alert_content VARCHAR(500) NOT NULL COMMENT '알림 내용',
+                              send_type INT NOT NULL COMMENT '발송 타입 코드 ID (cc_code.code_type = send_type)',
+                              enabled_yn CHAR(1) NOT NULL COMMENT '사용 여부 (Y/N)',
+                              alert_template TEXT DEFAULT NULL COMMENT '알림 템플릿 (NULL이면 템플릿 없음)',
+                              view_level INT NOT NULL COMMENT '알림 표시 등급 (cc_rank.rank_id 참조)',
+
+                              creator_id INT NOT NULL COMMENT '알림 등록자 ID (cc_employee.employee_id)',
+                              created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
+
+                              spare VARCHAR(255) COMMENT '예비 필드',
+
+    -- FK 제약
+                              CONSTRAINT fk_alert_type FOREIGN KEY (alert_type)
+                                  REFERENCES cc_code(code_id),
+
+                              CONSTRAINT fk_alert_send_type FOREIGN KEY (send_type)
+                                  REFERENCES cc_code(code_id),
+
+                              CONSTRAINT fk_alert_creator FOREIGN KEY (creator_id)
+                                  REFERENCES cc_employee(employee_id),
+
+                              CONSTRAINT fk_alert_view_level FOREIGN KEY (view_level)
+                                  REFERENCES cc_rank(rank_id)
+);
+
+CREATE TABLE alert_instance (
+                                alert_instance_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '알림 발송 고유 ID',
+
+                                alert_id INT NOT NULL COMMENT '알림 유형 ID (alert_master.alert_id 참조)',
+                                recipient_id INT NOT NULL COMMENT '수신자 ID (cc_employee.employee_id)',
+                                send_id INT NOT NULL COMMENT '발송자 ID (cc_employee.employee_id)',
+                                alert_title VARCHAR(500) NOT NULL COMMENT '알림 제목 (템플릿 적용 결과)',
+
+                                is_read CHAR(1) NOT NULL DEFAULT 'N' COMMENT '읽음 여부 (Y/N)',
+                                created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '발송일시',
+
+                                spare VARCHAR(255) COMMENT '예비 필드',
+
+    -- FK 제약
+                                CONSTRAINT fk_alert_instance_alert FOREIGN KEY (alert_id)
+                                    REFERENCES alert_master(alert_id),
+
+                                CONSTRAINT fk_alert_instance_recipient FOREIGN KEY (recipient_id)
+                                    REFERENCES cc_employee(employee_id),
+
+                                CONSTRAINT fk_alert_instance_sender FOREIGN KEY (send_id)
+                                    REFERENCES cc_employee(employee_id)
+);
+
+CREATE TABLE account_request (
+                                 request_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '가입 요청 고유 ID',
+
+                                 requester_id INT NOT NULL COMMENT '가입 요청자 ID (cc_employee.employee_id)',
+                                 requested_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '요청 일시',
+
+                                 processed_at DATETIME DEFAULT NULL COMMENT '처리 일시 (NULL이면 미처리 상태)',
+                                 processed_by INT DEFAULT NULL COMMENT '처리 관리자 ID (cc_employee.employee_id)',
+
+                                 request_status INT NOT NULL COMMENT '요청 상태 코드 (cc_code.code_type = request_status)',
+                                 reject_reason TEXT DEFAULT NULL COMMENT '거절 사유 (거절 시 입력)',
+
+                                 spare VARCHAR(255) COMMENT '예비 필드',
+
+    -- FK 제약
+                                 CONSTRAINT fk_account_requester FOREIGN KEY (requester_id)
+                                     REFERENCES cc_employee(employee_id),
+
+                                 CONSTRAINT fk_account_processed_by FOREIGN KEY (processed_by)
+                                     REFERENCES cc_employee(employee_id),
+
+                                 CONSTRAINT fk_account_status FOREIGN KEY (request_status)
+                                     REFERENCES cc_code(code_id)
+);
 
 show tables;
+
+commit;
