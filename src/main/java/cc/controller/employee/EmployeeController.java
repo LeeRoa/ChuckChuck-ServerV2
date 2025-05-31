@@ -1,8 +1,8 @@
 package cc.controller.employee;
 
 import cc.dto.ApiResponse;
-import cc.entity.Employee;
-import cc.service.EmployeeService;
+import cc.domain.employee.entity.Employee;
+import cc.domain.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;

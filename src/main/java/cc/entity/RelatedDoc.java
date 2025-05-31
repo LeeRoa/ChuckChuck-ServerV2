@@ -1,5 +1,6 @@
 package cc.entity;
 
+import cc.domain.approval.entity.Approval;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

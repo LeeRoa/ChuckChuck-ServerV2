@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        javaVersion = '17'
         springBootVersion = '3.2.5'
         springDependencyManagementVersion = '1.1.6'
         queryDslVersion = '6.11'
@@ -17,8 +18,9 @@ group = 'rise'
 version = '2.0.0'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(javaVersion)
+    }
 }
 
 configurations {
@@ -67,9 +69,6 @@ dependencies {
 
     // mail
     implementation 'org.springframework.boot:spring-boot-starter-mail'
-
-    // JDBC 로그
-    implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 
     // HTTP 통신
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
