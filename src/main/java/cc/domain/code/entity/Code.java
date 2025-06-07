@@ -17,7 +17,7 @@ public class Code {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "code_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 50)
     @NotNull

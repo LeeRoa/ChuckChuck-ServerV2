@@ -20,7 +20,7 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_no", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 20)
     @NotNull

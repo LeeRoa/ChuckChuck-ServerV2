@@ -19,7 +19,7 @@ public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notice_no", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 200)
     @NotNull

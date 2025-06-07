@@ -20,7 +20,7 @@ public class WorkPolicy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "work_policy_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 10)
     @NotNull
