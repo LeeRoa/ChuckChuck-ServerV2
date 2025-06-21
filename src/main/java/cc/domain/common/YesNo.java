@@ -1,4 +1,4 @@
-package cc.entity;
+package cc.domain.common;
 
 import lombok.Getter;
 

@@ -4,7 +4,7 @@ import cc.domain.code.entity.Code;
 import cc.domain.company.entity.Company;
 import cc.domain.department.entity.Department;
 import cc.domain.rank.entity.Rank;
-import cc.entity.YesNo;
+import cc.domain.common.YesNo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

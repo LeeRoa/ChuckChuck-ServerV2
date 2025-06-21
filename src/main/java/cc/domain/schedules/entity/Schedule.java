@@ -2,7 +2,7 @@ package cc.domain.schedules.entity;
 
 import cc.domain.code.entity.Code;
 import cc.domain.employee.entity.Employee;
-import cc.entity.YesNo;
+import cc.domain.common.YesNo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

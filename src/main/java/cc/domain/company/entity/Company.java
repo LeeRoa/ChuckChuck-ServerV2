@@ -1,7 +1,7 @@
 package cc.domain.company.entity;
 
 import cc.domain.code.entity.Code;
-import cc.entity.YesNo;
+import cc.domain.common.YesNo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
