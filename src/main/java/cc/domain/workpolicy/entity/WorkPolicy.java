@@ -1,7 +1,7 @@
 package cc.domain.workpolicy.entity;
 
+import cc.domain.common.YesNo;
 import cc.domain.employee.entity.Employee;
-import cc.entity.YesNo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,7 +29,7 @@ public class WorkPolicy {
 
     @NotNull
     @Column(name = "work_yn", nullable = false)
-    private YesNo workYn;
+    private ㅂYesNo workYn;
 
     @Column(name = "work_start_time")
     private LocalTime workStartTime;
