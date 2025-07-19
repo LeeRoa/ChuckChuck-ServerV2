@@ -391,38 +391,6 @@ CREATE TABLE related_doc (
     -- 자기 자신 참조 방지
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='결재 문서 간 관련 관계 관리';
 
-CREATE TABLE leave_policy (
-                              leave_policy_id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '휴가 정책 ID',
-
-                              leave_type BIGINT NOT NULL COMMENT '휴가 유형 코드 ID (cc_code.code_type = leave_type)',
-                              leave_provide_days INT NOT NULL COMMENT '기본 제공 휴가 일수',
-
-                              role_id BIGINT DEFAULT NULL COMMENT '적용 대상 권한 (예: ROLE_EMPLOYEE)',
-                              rank_id BIGINT DEFAULT NULL COMMENT '적용 대상 직급 ID (예: 과장, 부장)',
-                              company_no VARCHAR(20) DEFAULT NULL COMMENT '적용 회사 번호 (멀티 테넌시 대응)',
-
-                              effective_start DATE DEFAULT NULL COMMENT '정책 적용 시작일',
-                              effective_end DATE DEFAULT NULL COMMENT '정책 적용 종료일 (NULL이면 무기한)',
-
-                              created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '정책 생성일시',
-                              updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '정책 수정일시',
-
-                              spare VARCHAR(255) COMMENT '예비 필드',
-
-    -- FK 제약
-                              CONSTRAINT fk_leave_policy_type FOREIGN KEY (leave_type)
-                                  REFERENCES cc_code(code_id),
-
-                              CONSTRAINT fk_leave_policy_role FOREIGN KEY (role_id)
-                                  REFERENCES cc_code(code_id),
-
-                              CONSTRAINT fk_leave_policy_rank FOREIGN KEY (rank_id)
-                                  REFERENCES cc_rank(rank_id),
-
-                              CONSTRAINT fk_leave_policy_company FOREIGN KEY (company_no)
-                                  REFERENCES cc_company(biz_no)
-);
-
 CREATE TABLE emp_leave (
                            leave_seq BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '휴가 관리 시퀀스',
 
@@ -433,7 +401,7 @@ CREATE TABLE emp_leave (
                            leave_end_dt DATETIME NOT NULL COMMENT '휴가 종료일',
 
                            employee_id BIGINT NOT NULL COMMENT '사원 고유 번호',
-                           doc_no VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '전자결재 문서 번호',
+                           doc_no BIGINT NOT NULL COMMENT '전자결재 문서 번호',
 
                            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일자',
                            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일자',
