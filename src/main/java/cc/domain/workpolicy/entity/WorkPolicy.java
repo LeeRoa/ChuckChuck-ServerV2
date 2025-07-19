@@ -29,7 +29,7 @@ public class WorkPolicy {
 
     @NotNull
     @Column(name = "work_yn", nullable = false)
-    private ㅂYesNo workYn;
+    private YesNo workYn;
 
     @Column(name = "work_start_time")
     private LocalTime workStartTime;
