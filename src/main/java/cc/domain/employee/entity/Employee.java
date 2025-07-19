@@ -23,8 +23,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id", nullable = false)
-    private
-    Long id;
+    private Long id;
 
     @Size(max = 100)
     @NotNull

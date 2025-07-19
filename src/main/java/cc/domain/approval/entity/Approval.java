@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
 @Table(name = "cc_approval")
 public class Approval {
     @Id
-    @Size(max = 50)
-    @Column(name = "doc_no", nullable = false, length = 50)
-    private String docNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "doc_no", nullable = false)
+    private Long docNo;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
