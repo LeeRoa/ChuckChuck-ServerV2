@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "cc_employee")
 public class Employee {
     @Id
@@ -31,7 +33,6 @@ public class Employee {
     private String email;
 
     @Size(max = 15)
-    @NotNull
     @Column(name = "phone_number", nullable = false, length = 15)
     private String phoneNumber;
 
@@ -40,7 +41,12 @@ public class Employee {
     @Column(name = "password_hash", nullable = false, length = 64)
     private String passwordHash;
 
+    /* 앞단에서 받는 패스워드 */
+    @Transient
+    private String empPw;
+
     @Size(max = 50)
+    @NotNull
     @Column(name = "full_name", length = 50)
     private String fullName;
 
@@ -48,12 +54,10 @@ public class Employee {
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @NotNull
     @ColumnDefault("'Y'")
     @Column(name = "is_active", nullable = false)
     private YesNo isActive;
 
-    @NotNull
     @ColumnDefault("'N'")
     @Column(name = "agree_privacy", nullable = false)
     private YesNo agreePrivacy;
@@ -62,7 +66,6 @@ public class Employee {
     @Column(name = "position_code", length = 20)
     private String positionCode;
 
-    @NotNull
     @ColumnDefault("0")
     @Column(name = "login_fail_count", nullable = false)
     private Integer loginFailCount;
@@ -73,7 +76,6 @@ public class Employee {
     @Column(name = "retire_dt")
     private LocalDateTime retireDt;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Code roleId;
@@ -101,7 +103,6 @@ public class Employee {
     @Column(name = "basic_work_hours")
     private Integer basicWorkHours;
 
-    @NotNull
     @ColumnDefault("current_timestamp()")
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -113,5 +114,4 @@ public class Employee {
     @Size(max = 255)
     @Column(name = "spare")
     private String spare;
-
 }

@@ -6,7 +6,7 @@ spring:
   # DB Setting
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mariadb://34.47.121.72:3306/chuckchuck?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:log4jdbc:mariadb://34.47.121.72:3306/chuck?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: chuck1029!
 

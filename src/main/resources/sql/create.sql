@@ -63,10 +63,10 @@ CREATE TABLE cc_employee (
                              employee_id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '사원 고유 번호',
 
                              email VARCHAR(100) NOT NULL UNIQUE COMMENT '이메일 (로그인 아이디)',
-                             phone_number VARCHAR(15) NOT NULL UNIQUE COMMENT '전화번호 (예: 010-1234-5678)',
+                             phone_number VARCHAR(15) UNIQUE COMMENT '전화번호 (예: 010-1234-5678)',
                              password_hash CHAR(64) NOT NULL COMMENT '비밀번호 SHA-256 해시',
 
-                             full_name VARCHAR(50) COMMENT '사원 이름',
+                             full_name VARCHAR(50) NOT NULL COMMENT '사원 이름',
                              birth_date DATE NOT NULL COMMENT '생년월일',
 
                              is_active CHAR(1) NOT NULL DEFAULT 'Y' COMMENT '계정 활성 여부 (Y/N)',
